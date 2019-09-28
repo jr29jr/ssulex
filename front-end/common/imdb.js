@@ -37,7 +37,7 @@ class imdb {
         return {
             "type": (new RegExp("tv", "i")).test(dom.window.document.querySelector(".infobar").textContent) ? "TV Series" : "Movie",
             "title": dom.window.document.querySelector(".media-body h1").textContent.match(/^([^(]+)/)[1].trim(),
-            "year": dom.window.document.querySelector(".media-body h1").textContent.match(/^[^(]+\((\d+)[^)\d]*\)/)[1].trim(),
+            "year": dom.window.document.querySelector(".media-body h1").textContent.match(/\((?:[^\d]*)(\d+)(?:[^\d][^)]+)?\)\s*$/)[1].trim(),
             "synopsis": dom.window.document.querySelector(".plot-description").textContent.trim(),
             "genres": Object.values(dom.window.document.querySelectorAll(".media-body span[itemprop=genre]")).map(node => node.textContent.trim()),
             "thumb_url": dom.window.document.querySelector("img[alt$=Poster]").src,
