@@ -2377,7 +2377,27 @@ let s = {
     ]
   }
 };
+let http=require("http");
+
 class Meta{
+  getData(url){
+    return new Promise(function(resolve,reject){
+      let req=http.get(url,function(response){
+        // response 이벤트가 rk지되면 데이터를 body에 받아온다
+        let body = '';
+        response.on('data', function(data) {
+          body += data;
+        });
+        
+        // end 이벤트가 감지되면 데이터 수신을 종료하고 내용을 출력한다
+        response.on('end', function() {
+          // 데이저 수신 완료
+          resolve(body);
+        });
+      });
+      req.end();
+    });
+  }
 	getSeriesAll(){
 		return s;
 	}
