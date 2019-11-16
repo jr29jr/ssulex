@@ -1,6 +1,5 @@
 import Header from "../components/Header"
 import InfoLayout from "../components/InfoLayout"
-import { Head } from "next/document";
 
 const meta=require("../components/meta.js")
 

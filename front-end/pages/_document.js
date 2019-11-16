@@ -11,6 +11,23 @@ class CustomDocument extends Document {
                 margin: 0;
                 background-color: #3f3f3f;
             }
+            #detailInfo {
+                display: flex;
+                border :1px solid #000000
+            }
+            .epsInfo #title {
+                color : blue;
+                font-size : 20px;
+            }
+            .epsInfo #date {
+               float:right;
+            }
+            .epsInfo p{
+                color : white;
+            }
+            .epsInfo span{
+                color : white;
+            }
             #view {
                 display: flex;
             }
@@ -78,6 +95,16 @@ class CustomDocument extends Document {
             <body>
 		        <Main/>
                 <NextScript/>
+                <script>{`
+                    var divs = document.querySelectorAll("figure");
+                    divs.forEach(function(div) {
+                        div.addEventListener('click', logEvent)
+                    });
+
+                    function logEvent(event) {
+                        console.log(event.currentTarget.className)
+                    }
+                `}</script>
             </body>
             </html>
         );
