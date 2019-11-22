@@ -1,5 +1,3 @@
-import DetailSeries from "../pages/detailSeries";
-
 const meta=require("./meta")
 let ReactDOMServer=require("react-dom/server");
 const tempUrl="http://1.231.53.49:2000"
