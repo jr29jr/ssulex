@@ -1,62 +1,32 @@
 import InfoLayout from "./InfoLayout";
-import DetailSeries from "./DetailSeries";
 
 const meta=require("./meta")
 const ReactDOMServer=require("react-dom/server");
+const tempUrl="http://1.231.53.49:2000"
 
-function search(tt){
-	if(tt.key == 'Enter'){
-		let result=tt.currentTarget.value;
-		redraw(filter(tt.currentTarget.value));
-		
-    }
+async function search(tt){
+	if(tt.key == 'Enter')
+		redraw(tt.currentTarget.value);    
 }
 
-function showDetail(tt){
+async function showDetail(tt){
     let id=tt.currentTarget.id;
     let view = document.querySelector("#view");
     view.innerHTML = "";
     view.className = "detail";
-    let temp="";
-    temp=ReactDOMServer.renderToString(<DetailSeries id={id}></DetailSeries>);
-    view.innerHTML=temp;
+    view.innerHTML=await meta.getData(tempUrl+"/detailSeries?id="+id);
     //insert clickevent code
 }
 
-function redraw(filtered) {
+async function redraw(keyword) {
     let view = document.querySelector("#view");
-	let s=meta.getSeriesAll();
     view.innerHTML = "";
     view.className = "main";
-    let info="";
-    let target = filtered ? filtered : s;
-    for (let id in target) {
-        let title = target[id];
-        let lay=<InfoLayout id={id} thumb_url={title["thumb_url"]} title={title["title"]}></InfoLayout>
-        let str=ReactDOMServer.renderToString(lay);
-        info+=str;
-    }
-    view.innerHTML=info;
+    view.innerHTML=await meta.getData(tempUrl+"/search?keyword="+keyword);;
     let divs=view.querySelectorAll("figure");
     divs.forEach(function(div) {
         div.addEventListener('click', showDetail);
     });
-    
-}
-function filter(keyword) {
-	let ret = {};
-	let s=meta.getSeriesAll();
-    for (let id in s)
-        for (let value of Object.values(s[id]))
-            if (typeof value === "string") {
-                if (value.toLowerCase().includes(keyword.toLowerCase()))
-                    ret[id] = s[id];
-            }
-            else if (typeof value === 'object')
-                for (let e of value)
-                    if (e.toLowerCase().includes(keyword.toLowerCase()))
-                        ret[id] = s[id];
-    return ret;
 }
 
 

@@ -1,16 +1,15 @@
-import DetailSeries from "./DetailSeries";
+import DetailSeries from "../pages/detailSeries";
 
 const meta=require("./meta")
 let ReactDOMServer=require("react-dom/server");
+const tempUrl="http://1.231.53.49:2000"
 
-function showDetail(tt){
+async function showDetail(tt){
     let id=tt.currentTarget.id;
     let view = document.querySelector("#view");
     view.innerHTML = "";
     view.className = "detail";
-    let temp="";
-    temp=ReactDOMServer.renderToString(<DetailSeries id={id}></DetailSeries>);
-    view.innerHTML=temp;
+    view.innerHTML=await meta.getData(tempUrl+"/detailSeries?id="+id);
 }
 
 const InfoLayout = (props) =>(

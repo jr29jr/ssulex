@@ -2380,18 +2380,30 @@ let s = {
 let http=require("http");
 
 class Meta{
+  getSeriesByKeyword(keyword) {
+    let ret = {};
+    for (let id in s){
+      for (let value of Object.values(s[id]))
+        if (typeof value === "string") {
+          if (value.toLowerCase().includes(keyword.toLowerCase()))
+            ret[id] = s[id];
+      }
+      else if (typeof value === 'object')
+        for (let e of value)
+          if (e.toLowerCase().includes(keyword.toLowerCase()))
+            ret[id] = s[id];
+    }
+    //console.log(ret);
+    return ret;
+  }
   getData(url){
     return new Promise(function(resolve,reject){
       let req=http.get(url,function(response){
-        // response 이벤트가 rk지되면 데이터를 body에 받아온다
-        let body = '';
+        let body = "";
         response.on('data', function(data) {
-          body += data;
+          body+=data;
         });
-        
-        // end 이벤트가 감지되면 데이터 수신을 종료하고 내용을 출력한다
         response.on('end', function() {
-          // 데이저 수신 완료
           resolve(body);
         });
       });
