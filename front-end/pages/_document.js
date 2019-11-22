@@ -15,17 +15,17 @@ class CustomDocument extends Document {
                 display: flex;
                 border :1px solid #000000
             }
-            .epsInfo #title {
+            #title {
                 color : blue;
                 font-size : 20px;
             }
-            .epsInfo #date {
+            #date {
                float:right;
             }
-            .epsInfo p{
+            p{
                 color : white;
             }
-            .epsInfo span{
+            span{
                 color : white;
             }
             #view {
@@ -36,17 +36,6 @@ class CustomDocument extends Document {
             }
             #view article {
                 margin: 50px;
-            }
-            #view article table {
-                width: 100%;
-                color: white;
-                text-align: center;
-            }
-            #view article table tr:nth-child(even) {
-                background-color: #363636;
-            }
-            #view article table tr:nth-child(odd) {
-                background-color: #222021;
             }
             #view nav {
                 margin: 50px;
