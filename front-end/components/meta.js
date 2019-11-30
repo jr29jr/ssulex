@@ -2380,21 +2380,32 @@ let s = {
 let http=require("http");
 
 class Meta{
-  getSeriesByKeyword(keyword) {
-    let ret = {};
+  getSeriesByKeyword(type,keyword){
+    let result = {};
     for (let id in s){
-      for (let value of Object.values(s[id]))
-        if (typeof value === "string") {
-          if (value.toLowerCase().includes(keyword.toLowerCase()))
-            ret[id] = s[id];
+      if(s[id].hasOwnProperty(type)){
+        if (s[id][type].toLowerCase().includes(keyword.toLowerCase()))
+          result[id] = s[id];
       }
-      else if (typeof value === 'object')
-        for (let e of value)
-          if (e.toLowerCase().includes(keyword.toLowerCase()))
-            ret[id] = s[id];
     }
-    //console.log(ret);
-    return ret;
+    return result;
+  }
+  getDataForDetailPage(id){
+    let seriseInfo=s[id]; 
+    if(!seriseInfo)
+      return null;
+
+    if(seriseInfo.hasOwnProperty("episode")){
+      let epiList=new Array();
+      for(let i in seriseInfo.episode){
+        let id=seriseInfo.episode[i];
+        let item=e[id];
+        item.id=id;
+        epiList.push(item);
+      }
+      seriseInfo.episode=epiList;
+    }
+    return seriseInfo;
   }
   getData(url){
     return new Promise(function(resolve,reject){
